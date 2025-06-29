@@ -1,7 +1,24 @@
 {
-  "version": "0.0.0",
-  "keywords": [],
-  "type": "commonjs",
+  "name": "@gismark/strapi-geometry-fields",
+  "version": "0.1.0",
+  "description": "Store and edit geospatial data with PostGIS in a Strapi v5 custom field",
+  "keywords": [
+    "strapi",
+    "plugin",
+    "postgis",
+    "geojson",
+    "wkt",
+    "geometry",
+    "custom-field",
+    "gis"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Markov Media",
+    "email": "info@markovmedia.com",
+    "url": "https://www.markovmedia.com"
+  },
+
   "exports": {
     "./package.json": "./package.json",
     "./strapi-admin": {
@@ -63,10 +80,7 @@
     "kind": "plugin",
     "name": "geometry-fields",
     "displayName": "Geometry Fields",
-    "description": ""
+    "description": "Store and edit geospatial data with PostGIS in a Strapi v5 custom field"
   },
-  "name": "geometry-fields",
-  "description": "",
-  "license": "MIT",
-  "author": "MarkovMedia <info@markovmedia.com>"
+    "type": "commonjs"
 }

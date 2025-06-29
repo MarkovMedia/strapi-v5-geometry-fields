@@ -1,0 +1,4 @@
+admin/src/lib/Leaflet.Editable.js linguist-vendored
+admin/src/lib/Path.Drag.js linguist-vendored
+strapi-admin.js linguist-generated
+strapi-server.js linguist-generated

@@ -2,13 +2,12 @@
 
 **Store and edit geospatial data with PostGIS in a Strapi 5 custom field.**
 
-The plugin accepts WKT (Well-known text) or GeoJSON from the API and stores it as binary (WKB).
-It needs PostgreSQL as database and PostGIS installed.
-You can use multiple geometry fields in multiple content types. All features are editable and draggable using the built-in Leaflet.Editable and Leaflet.Drag.
+The plugin accepts WKT (Well-known text) or GeoJSON from the API and stores it in a PostGIS column in the db table of the content type.
+You can use multiple geometry fields in different content types. All features are editable and draggable using the built-in Leaflet.Editable and Leaflet.Drag.
 
 This example is a multipolygon with the boundaries of France as WKT. 
 
-![Geometry Field example](https://raw.githubusercontent.com/MarkovMedia/strapi-plugin-geometry-fields/main/assets/geometry-fields.jpg)
+![Geometry Field example](https://raw.githubusercontent.com/MarkovMedia/strapi-v5-geometry-fields/refs/heads/main/assets/geometry-fields.jpg)
 
 ## Installation
 
@@ -41,6 +40,8 @@ For the Leaflet map and the markers to display you must allow Openstreetmap in y
   },
 </pre>
 
+In the settings, choose if the plugin should handle WKT of GeoJSON from the API (default is WKT)
+
 ## Usage
 
 ### In the Content Type Builder
@@ -57,6 +58,11 @@ Add this field to the schema.json of your content type ('geometry' can be any un
       "type": "customField",
       "customField": "plugin::geometry-fields.geometry"
     },</pre>
+
+## Examples
+
+input as WKT
+input as GeoJSON
 
 ## Tested with
 
