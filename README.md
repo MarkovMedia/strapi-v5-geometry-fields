@@ -5,7 +5,7 @@
 The plugin accepts WKT (Well-known text) or GeoJSON from the API and stores it in a PostGIS column in the db table of the content type.
 You can use multiple geometry fields across different content types. All features are editable and draggable using the hosted Leaflet.Editable and Leaflet.Drag.
 
-This example is a multipolygon with the boundaries of France as WKT. 
+This example is a multipolygon with the boundaries of France as WKT.
 
 ![Geometry Field example](https://raw.githubusercontent.com/MarkovMedia/strapi-v5-geometry-fields/refs/heads/main/assets/geometry-fields.jpg)
 
@@ -47,22 +47,44 @@ In the settings, choose if the plugin should handle WKT of GeoJSON from the API 
 ### In the Content Type Builder
 
 - Create a new collection type
-- In the field selection, choose CUSTOM, select the Geometry field and give it a name
+- In the field selection, choose CUSTOM, select the Geometry field and give it a name (e.g. 'geometry')
 - Finish & Save
 
 ### In the code
 
-Add this field to the schema.json of your content type ('geometry' can be any unique field name)
+Add this field to the schema.json of your content type
 
 <pre>    "geometry": {
       "type": "customField",
       "customField": "plugin::geometry-fields.geometry"
     },</pre>
 
+- An extra column '\_\_geom_geometry' is created in the db table for the content type.
+
 ## Examples
 
-input as WKT
-input as GeoJSON
+### input as WKT
+
+<pre>
+{ 
+  "data": {
+    "geometry": { wkt: "POINT (30 10)" }   
+  }
+}
+</pre>
+
+### input as GeoJSON
+
+<pre>
+{ 
+  "data": {
+    "geometry": {
+    "type": "Point",
+    "coordinates": [30, 10]
+  }   
+  }
+}
+</pre>
 
 ## Tested with
 
@@ -76,11 +98,7 @@ MIT
 
 ## Todo
 
-- Choose CRS (Coordinate Reference System) from settings 
+- Choose CRS (Coordinate Reference System) from settings
 - Create & delete features in custom field
 - Click feature shows popup with geo info
 - Validate WKT / GeoJSON option
-
-
-
-
