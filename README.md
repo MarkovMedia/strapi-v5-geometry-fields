@@ -1,9 +1,10 @@
-# Introduction
+# Geometry Fields for Strapi
 
-**Store and edit geospatial data with PostGIS in a Strapi 5 custom field.**
+**Store and edit geospatial data with PostGIS in a Strapi v5 custom field.**
 
-The plugin accepts WKT (Well-known text) or GeoJSON from the API and stores it in a PostGIS column in the db table of the content type.
-You can use multiple geometry fields across different content types. All features are editable and draggable using the hosted Leaflet.Editable and Leaflet.Drag.
+The plugin accepts WKT (Well-known text) or GeoJSON from the API and stores it in a PostGIS column in the db table of the content type. You can use multiple geometry fields across different content types. All features are editable and draggable using the hosted [Leaflet.Editable](https://github.com/Leaflet/Leaflet.Editable) and [Path.Drag](https://github.com/Leaflet/Path.Drag.js/).
+
+
 
 This example is a multipolygon with the boundaries of France as WKT.
 
