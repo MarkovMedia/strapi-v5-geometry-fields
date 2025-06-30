@@ -1,0 +1,16 @@
+# folders
+node_modules
+.vscode
+.idea
+coverage
+__tests__
+dist
+
+# files
+.env
+.env.*
+.npmignore
+.git
+.gitignore
+*.log
+.DS_Store
