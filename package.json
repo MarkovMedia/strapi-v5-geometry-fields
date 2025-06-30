@@ -18,7 +18,10 @@
     "email": "info@markovmedia.com",
     "url": "https://www.markovmedia.com"
   },
-
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarkovMedia/strapi-v5-geometry-fields"
+  },
   "exports": {
     "./package.json": "./package.json",
     "./strapi-admin": {
