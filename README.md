@@ -91,6 +91,15 @@ Add this field to the schema.json of your content type
 - PostgreSQL 12.4
 - PostGIS 3.0.2
 
+### Geometries
+
+Currently, these geometries as WKT and GeoJSON are supported by the plugin for all CRUD functions:
+
+- Point and MultiPoint
+- LineString and MultiLineString
+- Polygon and MultiPolygon
+- GeometryCollection containing all of the above
+
 ## License
 
 MIT
