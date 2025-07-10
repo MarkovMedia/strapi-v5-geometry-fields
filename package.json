@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MarkovMedia/strapi-v5-geometry-fields"
+    "url": "git+https://github.com/MarkovMedia/strapi-v5-geometry-fields.git"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -53,15 +53,19 @@
   "dependencies": {
     "@strapi/design-system": "^2.0.0-rc.27",
     "@strapi/icons": "^2.0.0-rc.27",
+    "@terraformer/wkt": "^2.2.1",
     "leaflet": "^1.9.4",
     "react-intl": "^7.1.11",
     "wkt": "^0.1.1"
   },
   "devDependencies": {
+    "@strapi/sdk-plugin": "^5.3.2",
+    "@strapi/strapi": "^5.16.1",
     "@strapi/typescript-utils": "^5.16.1",
     "@types/leaflet": "^1.9.19",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@types/terraformer__wkt": "^2.0.3",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3"
   },
@@ -79,5 +83,5 @@
     "displayName": "Geometry Fields",
     "description": "Store and edit geospatial data with PostGIS in a Strapi v5 custom field"
   },
-    "type": "commonjs"
+  "type": "commonjs"
 }

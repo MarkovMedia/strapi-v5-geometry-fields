@@ -1,10 +1,8 @@
-# Geometry Fields for Strapi
+# Geometry Fields plugin for Strapi
 
 **Store and edit geospatial data with PostGIS in a Strapi v5 custom field.**
 
 The plugin accepts WKT (Well-known text) or GeoJSON from the API and stores it in a PostGIS column in the db table of the content type. You can use multiple geometry fields across different content types. All features are editable and draggable using the hosted [Leaflet.Editable](https://github.com/Leaflet/Leaflet.Editable) and [Path.Drag](https://github.com/Leaflet/Path.Drag.js/).
-
-
 
 This example is a multipolygon with the boundaries of France as WKT.
 
@@ -12,11 +10,11 @@ This example is a multipolygon with the boundaries of France as WKT.
 
 ## Installation
 
-<pre> # with yarn
-yarn add @gismark/strapi-geometry-fields </pre>
-
 <pre> # with npm
 npm install @gismark/strapi-geometry-fields </pre>
+
+<pre> # with yarn
+yarn add @gismark/strapi-geometry-fields </pre>
 
 ## Configuration
 
@@ -24,7 +22,7 @@ This plugin only runs with PostgreSQL and needs PostGIS to be installed. If you 
 
 <pre>CREATE EXTENSION postgis;</pre>
 
-For the Leaflet map and the markers to display you must allow Openstreetmap in your middlewares.js like so:
+For the Leaflet map and the markers to display you must allow Openstreetmap in your middlewares.js. Update "strapi::security" like so:
 
 <pre>
   {
@@ -41,7 +39,7 @@ For the Leaflet map and the markers to display you must allow Openstreetmap in y
   },
 </pre>
 
-In the settings, choose if the plugin should handle WKT of GeoJSON from the API (default is WKT)
+In the settings, choose if the plugin should handle WKT or GeoJSON from the API (default is WKT)
 
 ## Usage
 
@@ -58,7 +56,7 @@ Add this field to the schema.json of your content type
 <pre>    "geometry": {
       "type": "customField",
       "customField": "plugin::geometry-fields.geometry"
-    },</pre>
+    }</pre>
 
 - An extra column '\_\_geom_geometry' is created in the db table for the content type.
 
@@ -68,8 +66,8 @@ Add this field to the schema.json of your content type
 
 <pre>
 { 
-  "data": {
-    "geometry": { wkt: "POINT (30 10)" }   
+  data: {
+    geometry: { wkt: "POINT (30 10)" }   
   }
 }
 </pre>
@@ -78,10 +76,10 @@ Add this field to the schema.json of your content type
 
 <pre>
 { 
-  "data": {
-    "geometry": {
-    "type": "Point",
-    "coordinates": [30, 10]
+  data: {
+    geometry: {
+    type: "Point",
+    coordinates: [30, 10]
   }   
   }
 }
@@ -96,10 +94,3 @@ Add this field to the schema.json of your content type
 ## License
 
 MIT
-
-## Todo
-
-- Choose CRS (Coordinate Reference System) from settings
-- Create & delete features in custom field
-- Click feature shows popup with geo info
-- Validate WKT / GeoJSON option

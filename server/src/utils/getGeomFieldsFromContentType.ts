@@ -29,7 +29,7 @@ export const getGeomFieldsFromContentType = (
   const fields: GetGeomFieldsResult['fields'] = [];
 
   if (!strapi.db) {
-    strapi.log.warn('[PostGIS] strapi.db is undefined');
+    strapi.log.warn('[Geometry Fields] strapi.db is undefined');
     return null;
   }
 

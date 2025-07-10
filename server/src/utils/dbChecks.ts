@@ -7,7 +7,7 @@ export const isPostgres = ({ strapi }: { strapi: Core.Strapi}): boolean => {
 
 export const hasPostgis = async ({ strapi } : { strapi: Core.Strapi }) : Promise<boolean | null> => {  
   if (!strapi.db) {
-    strapi.log.warn("[PostGIS] strapi.db is undefined");
+    strapi.log.warn("[Geometry Fields] strapi.db is undefined");
     return null;
   }
 
@@ -20,7 +20,7 @@ export const hasPostgis = async ({ strapi } : { strapi: Core.Strapi }) : Promise
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     strapi.log.warn(
-      "[PostGIS] Failed to check for PostGIS extension:",
+      "[Geometry Fields] Failed to check for PostGIS extension:",
       message
     );
     return false;

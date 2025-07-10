@@ -151,7 +151,7 @@ async function create(result: any, tableName: string, wktColumns: WktColumn[]) {
             [wktColumn.format === 'wkt' ? geometry.wkt : geometry]
           ),
         });
-      strapi.log.info('Geometry column updated after publish');
+      //strapi.log.info('[Geometry Fields] Geometry column updated after publish');
     } catch (err) {
       strapi.log.error(`Failed to update ${geometryColumn} for ${tableName}:`, err);
     }
@@ -177,7 +177,7 @@ async function update(result: any, tableName: string, wktColumns: WktColumn[]) {
               [wktColumn.format === 'wkt' ? geometry.wkt : geometry]
             ),
           });
-        strapi.log.info('Geometry column updated after publish');
+       // strapi.log.info('[Geometry Fields] Geometry column updated after publish');
       } catch (err) {
         strapi.log.error(`Failed to update ${geometryColumn} for ${tableName}:`, err);
       }
@@ -204,7 +204,7 @@ async function publish(result: any, tableName: string, wktColumns: WktColumn[]) 
               [wktColumn.format === 'wkt' ? geometry.wkt : geometry]
             ),
           });
-        strapi.log.info('Geometry column updated after publish');
+       // strapi.log.info('[Geometry Fields] Geometry column updated after publish');
       } catch (err) {
         strapi.log.error(`Failed to update ${geometryColumn} for ${tableName}:`, err);
       }

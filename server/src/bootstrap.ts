@@ -14,12 +14,12 @@ type ExistsResult = {
 
 const bootstrap = async ({ strapi }: { strapi: Core.Strapi }) => {
   if (!isPostgres({ strapi })) {
-    strapi.log.warn("[PostGIS] Skipping migration: not using PostgreSQL");
+    strapi.log.warn("[Geometry Fields] Skipping migration: not using PostgreSQL");
     return;
   }
 
   if (!(await hasPostgis({ strapi }))) {
-    strapi.log.warn("[PostGIS] Skipping migration: PostGIS extension not found");
+    strapi.log.warn("[Geometry Fields] Skipping migration: PostGIS extension not found");
     return;
   }
 
