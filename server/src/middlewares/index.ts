@@ -1,9 +1,8 @@
-import wkt from 'wkt';
-
 import { getGeomFieldsFromContentType } from '../utils/getGeomFieldsFromContentType';
+import { updateGeometryColumn } from './helpers/updateGeometryColumn';
+import { getGeometryValue } from './helpers/getGeometryValue';
 
 import type { Core } from '@strapi/strapi';
-import type { Geometry } from 'geojson';
 
 interface WktColumn {
   field: string;
@@ -28,42 +27,20 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
     const result = await next();
 
-    // === AFTER ACTION ===
-    // if (action === 'create') {
-    //   await create(result, tableName, wktColumns.fields);
-    // }
-
-    // if (action === 'update') {
-    //   await update(result, tableName, wktColumns.fields);
-    // }
-
-    // if (action === 'publish') {
-    //   await publish(result, tableName, wktColumns.fields);
-    // }
-
-    // if (action === 'findOne') {
-    //   await findOne(result, tableName, wktColumns.fields);
-    // }
-
-    // if (action === 'findMany') {
-    //   await findMany(result, tableName, wktColumns.fields);
-    // }
-
-
     switch (action) {
-      case "create":
+      case 'create':
         await create(result, tableName, wktColumns.fields);
         break;
-      case "update":
+      case 'update':
         await update(result, tableName, wktColumns.fields);
         break;
-      case "publish":
-        await publish( result, tableName, wktColumns.fields);
+      case 'publish':
+        await publish(result, tableName, wktColumns.fields);
         break;
-      case "findOne":
+      case 'findOne':
         await findOne(result, tableName, wktColumns.fields);
         break;
-      case "findMany":
+      case 'findMany':
         await findMany(result, tableName, wktColumns.fields);
         break;
     }
@@ -71,32 +48,6 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
     return result;
   };
 };
-
-// Util function reads data from the geometry (PostGIS) column for findOne and findAll
-async function getGeometryValue(
-  tableName: string,
-  geometryColumn: string,
-  documentId: string,
-  format: 'wkt' | 'geojson'
-): Promise<Geometry | string | null> {
-  const knex = strapi.db.connection;
-
-  try {
-    const rows = await knex(tableName)
-      .select(knex.raw(`ST_AsText(${geometryColumn}) as ${geometryColumn}`))
-      .where({ document_id: documentId });
-
-    if (rows.length > 0 && rows[0][geometryColumn]) {
-      const geom = format === 'wkt' ? rows[0][geometryColumn] : wkt.parse(rows[0][geometryColumn]);
-
-      return geom;
-    }
-  } catch (err) {
-    strapi.log.error('Failed to fetch geometry from PostGIS:', err);
-  }
-
-  return null;
-}
 
 // Overwrites the custom field with data from geometry (PostGIS) column for one item
 async function findOne(result: any, tableName: string, wktColumns: WktColumn[]) {
@@ -110,7 +61,7 @@ async function findOne(result: any, tableName: string, wktColumns: WktColumn[]) 
     );
 
     if (geom) {
-       result[wktColumn.field] = wktColumn.format === 'wkt' ? { wkt: geom } : geom;    
+      result[wktColumn.field] = wktColumn.format === 'wkt' ? { wkt: geom } : geom;
     }
   }
 }
@@ -138,49 +89,39 @@ async function findMany(result: any[], tableName, wktColumns: WktColumn[]) {
 async function create(result: any, tableName: string, wktColumns: WktColumn[]) {
   const knex = strapi.db.connection;
 
-  for (const wktColumn of wktColumns) {
-    const geometryColumn = `__geom_${wktColumn.column}`;
-    const geometry = result[wktColumn.column];
+  for (const { column, format } of wktColumns) {
+    const geometry = result[column];
 
-    try {
-      await knex(tableName)
-        .where({ id: result.id })
-        .update({
-          [geometryColumn]: knex.raw(
-            wktColumn.format === 'wkt' ? 'ST_GeomFromText(?, 4326)' : 'ST_GeomFromGeoJSON(?)',
-            [wktColumn.format === 'wkt' ? geometry.wkt : geometry]
-          ),
-        });
-      //strapi.log.info('[Geometry Fields] Geometry column updated after publish');
-    } catch (err) {
-      strapi.log.error(`Failed to update ${geometryColumn} for ${tableName}:`, err);
-    }
+    await updateGeometryColumn({
+      knex,
+      tableName,
+      idField: 'document_id',
+      idValue: result.documentId,
+      column,
+      format,
+      geometry,
+    });
   }
 }
 
 // Copies the custom field data to the geometry column on update
-// (with timeout to avoid lock from Strapi query) (only draft is updated)
+// with timeout to avoid lock from Strapi query
 async function update(result: any, tableName: string, wktColumns: WktColumn[]) {
   const knex = strapi.db.connection;
 
-  for (const wktColumn of wktColumns) {
-    const geometryColumn = `__geom_${wktColumn.column}`;
-    const geometry = result[wktColumn.column];
+  for (const { column, format } of wktColumns) {
+    const geometry = result[column];
 
-    setTimeout(async () => {
-      try {
-        await knex(tableName)
-          .where({ id: result.id })
-          .update({
-            [geometryColumn]: knex.raw(
-              wktColumn.format === 'wkt' ? 'ST_GeomFromText(?, 4326)' : 'ST_GeomFromGeoJSON(?)',
-              [wktColumn.format === 'wkt' ? geometry.wkt : geometry]
-            ),
-          });
-       // strapi.log.info('[Geometry Fields] Geometry column updated after publish');
-      } catch (err) {
-        strapi.log.error(`Failed to update ${geometryColumn} for ${tableName}:`, err);
-      }
+    setTimeout(() => {
+      updateGeometryColumn({
+        knex,
+        tableName,
+        idField: 'id',
+        idValue: result.id,
+        column,
+        format,
+        geometry,
+      });
     }, 0);
   }
 }
@@ -189,25 +130,21 @@ async function update(result: any, tableName: string, wktColumns: WktColumn[]) {
 // (with timeout to avoid lock from Strapi query) (both draft and publish are updated)
 async function publish(result: any, tableName: string, wktColumns: WktColumn[]) {
   const knex = strapi.db.connection;
+  const entry = result.entries[0];
 
-  for (const wktColumn of wktColumns) {
-    const geometryColumn = `__geom_${wktColumn.column}`;
-    const geometry = result.entries[0][wktColumn.column];
+  for (const { column, format } of wktColumns) {
+    const geometry = entry[column];
 
-    setTimeout(async () => {
-      try {
-        await knex(tableName)
-          .where({ document_id: result.entries[0].documentId })
-          .update({
-            [geometryColumn]: knex.raw(
-              wktColumn.format === 'wkt' ? 'ST_GeomFromText(?, 4326)' : 'ST_GeomFromGeoJSON(?)',
-              [wktColumn.format === 'wkt' ? geometry.wkt : geometry]
-            ),
-          });
-       // strapi.log.info('[Geometry Fields] Geometry column updated after publish');
-      } catch (err) {
-        strapi.log.error(`Failed to update ${geometryColumn} for ${tableName}:`, err);
-      }
+    setTimeout(() => {
+      updateGeometryColumn({
+        knex,
+        tableName,
+        idField: 'document_id',
+        idValue: entry.documentId,
+        column,
+        format,
+        geometry,
+      });
     }, 0);
   }
 }

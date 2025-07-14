@@ -18,7 +18,7 @@ yarn add @gismark/strapi-geometry-fields </pre>
 
 ## Configuration
 
-This plugin only runs with PostgreSQL and needs PostGIS to be installed. If you haven't already done so run this query in Postgres:
+This plugin only runs with PostgreSQL and needs PostGIS to be installed. If you haven't already done so, run this query in Postgres:
 
 <pre>CREATE EXTENSION postgis;</pre>
 
@@ -45,8 +45,8 @@ In the settings, choose if the plugin should handle WKT or GeoJSON from the API 
 
 ### In the Content Type Builder
 
-- Create a new collection type
-- In the field selection, choose CUSTOM, select the Geometry field and give it a name (e.g. 'geometry')
+- Create a new or choose an existing collection type
+- In the field selection, select CUSTOM, choose the Geometry field and give it a name (e.g. 'geometry')
 - Finish & Save
 
 ### In the code

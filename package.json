@@ -55,8 +55,7 @@
     "@strapi/icons": "^2.0.0-rc.27",
     "@terraformer/wkt": "^2.2.1",
     "leaflet": "^1.9.4",
-    "react-intl": "^7.1.11",
-    "wkt": "^0.1.1"
+    "react-intl": "^7.1.11"
   },
   "devDependencies": {
     "@strapi/sdk-plugin": "^5.3.2",
