@@ -1,6 +1,6 @@
 {
   "name": "@gismark/strapi-geometry-fields",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Store and edit geospatial data with PostGIS in a Strapi v5 custom field",
   "keywords": [
     "strapi",
