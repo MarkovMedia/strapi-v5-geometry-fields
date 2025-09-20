@@ -4,7 +4,7 @@
 
 The plugin accepts WKT (Well-known text) or GeoJSON from the API and stores it in a PostGIS column in the db table of the content type. You can use multiple geometry fields across different content types. All features are editable and draggable using the hosted [Leaflet.Editable](https://github.com/Leaflet/Leaflet.Editable) and [Path.Drag](https://github.com/Leaflet/Path.Drag.js/).
 
-This example is a multipolygon with the boundaries of France as WKT.
+Screenshot is a multipolygon with the boundaries of France as WKT.
 
 ![Geometry Field example](https://raw.githubusercontent.com/MarkovMedia/strapi-v5-geometry-fields/refs/heads/main/assets/geometry-fields.jpg)
 
@@ -87,7 +87,7 @@ Add this field to the schema.json of your content type
 
 ## Tested with
 
-- Strapi 5.15.1
+- Strapi 5.16.1
 - PostgreSQL 12.4
 - PostGIS 3.0.2
 

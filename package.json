@@ -51,30 +51,29 @@
     "test:ts:back": "run -T tsc -p server/tsconfig.json"
   },
   "dependencies": {
+    "@terraformer/wkt": "^2.2.1",
+    "leaflet": "^1.9.4"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": ">=5.10.0 <6.0.0",
     "@strapi/design-system": "^2.0.0-rc.27",
     "@strapi/icons": "^2.0.0-rc.27",
-    "@terraformer/wkt": "^2.2.1",
-    "leaflet": "^1.9.4",
-    "react-intl": "^7.1.11"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1",
+    "react-intl": "^7.1.11",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@strapi/sdk-plugin": "^5.3.2",
-    "@strapi/strapi": "^5.16.1",
-    "@strapi/typescript-utils": "^5.16.1",
+    "@strapi/strapi": "^5.23.6",
+    "@strapi/typescript-utils": "^5.23.6",
     "@types/leaflet": "^1.9.19",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/terraformer__wkt": "^2.0.3",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3"
-  },
-  "peerDependencies": {
-    "@strapi/sdk-plugin": "^5.3.2",
-    "@strapi/strapi": "^5.16.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.30.1",
-    "styled-components": "^6.1.19"
   },
   "strapi": {
     "kind": "plugin",
